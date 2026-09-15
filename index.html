@@ -6,19 +6,41 @@
 <title>SunSwipe — Trouve ta prochaine destination en swipant</title>
 <meta name="impact-site-verification" content="e76c1da0-0a5d-4deb-b350-b54d2aed3f0c">
 <meta name="description" content="SunSwipe : 9 questions, puis tu swipes. On te propose des destinations qui collent vraiment à ton ambiance, ton budget et tes dates.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://sunswipe.vercel.app/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sunswipe.vercel.app/">
+<meta property="og:title" content="SunSwipe — Trouve ta prochaine destination en swipant">
+<meta property="og:description" content="9 questions, puis tu swipes. On te propose des destinations qui collent vraiment à ton ambiance, ton budget et tes dates.">
+<meta property="og:image" content="https://sunswipe.vercel.app/og-image.png">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SunSwipe — Trouve ta prochaine destination en swipant">
+<meta name="twitter:description" content="9 questions, puis tu swipes. On te propose des destinations qui collent vraiment à ton ambiance, ton budget et tes dates.">
+<meta name="twitter:image" content="https://sunswipe.vercel.app/og-image.png">
+
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #FBF5EC;
     --ink: #211D17;
-    --muted: #948C7E;
-    --muted-light: #B8AFA0;
+    --muted: #767064;
+    --muted-light: #6D675D;
     --border: #EDE3D3;
     --coral: #EA5B2F;
+    --coral-btn: #C64D27;
     --coral-soft: #FCE7DB;
     --coral-text: #C1502A;
-    --teal: #1E8A78;
+    --teal: #197566;
     --teal-soft: #DFF1EC;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,7 +72,7 @@
   h1 .accent { color: var(--coral); }
   .hero-sub { font-size: 17.5px; color: var(--muted); max-width: 460px; margin-bottom: 34px; line-height: 1.6; }
   .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-  .btn-primary { background: var(--coral); color: #fff; padding: 16px 30px; border-radius: 999px; font-weight: 700; font-size: 15.5px; display: inline-block; box-shadow: 0 8px 24px rgba(234,91,47,0.28); transition: transform 0.15s ease; }
+  .btn-primary { background: var(--coral-btn); color: #fff; padding: 16px 30px; border-radius: 999px; font-weight: 700; font-size: 15.5px; display: inline-block; box-shadow: 0 8px 24px rgba(198,77,39,0.32); transition: transform 0.15s ease; }
   .btn-primary:hover { transform: translateY(-2px); }
   .cta-hint { font-size: 13px; color: var(--muted-light); }
   .stats-row { display: flex; gap: 32px; margin-top: 44px; }
@@ -220,7 +242,7 @@
       <div class="step">
         <div class="step-num">03</div>
         <h3>Réserve où tu veux</h3>
-        <p>Un vrai prix vérifié, un bouton, et tu es redirigé vers Skyscanner pour finaliser ta réservation en toute liberté.</p>
+        <p>Un vrai prix de vol vérifié, affiché directement dans l'appli. Pour l'hôtel, un accès direct à Booking.com te permet de compléter ta réservation en toute liberté.</p>
       </div>
     </div>
   </div>
@@ -278,6 +300,7 @@
       <p>SunSwipe arrive bientôt sur l'App Store et le Play Store. Laisse ton email, on te préviendra le jour J.</p>
       <form class="waitlist-form" id="waitlistForm">
         <input type="email" id="waitlistEmail" placeholder="ton@email.com" required>
+        <input type="text" id="waitlistWebsite" name="website" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;" aria-hidden="true">
         <button type="submit" id="waitlistBtn">Être prévenu(e)</button>
       </form>
       <div class="waitlist-msg" id="waitlistMsg"></div>
@@ -288,9 +311,18 @@
     document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const emailInput = document.getElementById('waitlistEmail');
+      const websiteInput = document.getElementById('waitlistWebsite');
       const btn = document.getElementById('waitlistBtn');
       const msg = document.getElementById('waitlistMsg');
       const email = emailInput.value.trim();
+      // Piège à bots : ce champ est invisible pour un humain (position hors écran) mais
+      // un robot qui remplit tous les champs automatiquement le remplira. S'il contient
+      // quoi que ce soit, on affiche un faux succès sans jamais appeler l'API.
+      if (websiteInput.value.trim() !== '') {
+        msg.textContent = "Merci ! On te préviendra dès le lancement";
+        emailInput.value = '';
+        return;
+      }
       btn.disabled = true;
       btn.textContent = '...';
       try {

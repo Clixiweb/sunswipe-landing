@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FBF5EC"/>
+  <circle cx="1050" cy="80" r="220" fill="#FCE7DB"/>
+  <circle cx="1050" cy="80" r="140" fill="#EA5B2F" opacity="0.15"/>
+  <text x="90" y="260" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="64" fill="#211D17">Sun<tspan fill="#EA5B2F">Swipe</tspan></text>
+  <text x="90" y="330" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="40" fill="#211D17">Ton prochain voyage se décide en un swipe.</text>
+  <text x="90" y="390" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#767064">201 destinations réelles · prix vérifiés</text>
+  <rect x="88" y="440" width="230" height="60" rx="30" fill="#C64D27"/>
+  <text x="203" y="478" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF" text-anchor="middle">Bientôt disponible</text>
+</svg>
